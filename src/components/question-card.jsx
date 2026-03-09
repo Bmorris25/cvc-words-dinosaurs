@@ -19,14 +19,18 @@ function QuestionCard() {
   }
 
   function buildChoices(allQuestions, correctAnswer) {
-    const wrongPool = allQuestions
-      .map((q) => q.answer)
-      .filter((word) => word !== correctAnswer);
+  const wrongPool = [
+    ...new Set(
+      allQuestions
+        .map((q) => q.answer)
+        .filter((answer) => answer !== correctAnswer)
+    ),
+  ];
 
-    const wrongChoices = shuffle(wrongPool).slice(0, 3);
-    return shuffle([correctAnswer, ...wrongChoices]);
-  }  
-  
+  const wrongChoices = shuffle(wrongPool).slice(0, 3);
+  return shuffle([correctAnswer, ...wrongChoices]);
+  }
+
   const [remainingQuestions, setRemainingQuestions] = useState (
       shuffle([...questions])
     )
@@ -111,7 +115,7 @@ function resetGame() {
     return (
       <div className='question-card'>
         <img
-  src={`assets/blueyStart.png`}
+  src={`assets/dino-start.png`}
   alt="start game"
   className="start-image"
   onClick={() => setGameStarted(true)}
